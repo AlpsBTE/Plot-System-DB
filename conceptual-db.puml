@@ -1,0 +1,104 @@
+@startuml
+skinparam nodesep 200
+skinparam ranksep 200
+
+skinparam linetype ortho
+
+hide empty members
+!theme blueprint
+
+entity "API Key" as api_key {
+    API-Key <<CK>>
+    Create-Date
+}
+
+entity "Build Team" as build_team {
+    Build-Team-ID <<CK>>
+}
+
+entity "Country" as country {
+    Country-ID <<CK>>
+    Continent
+}
+
+entity "City Project" as city_project {
+    City-Project-ID <<CK>>
+    Is-Visible
+}
+
+entity "Build Team Country" as build_team_country {
+}
+
+entity "Builder" as builder {
+    UUID <<CK>>
+    Name
+    Score
+    Completed-Plots
+}
+
+entity "Reviewer" as reviewer {
+}
+
+entity "Builder Setting" as builder_setting {
+    Plot-Type
+}
+
+entity "Plot Difficulty" as plot_difficulty {
+    Difficulty-ID <<CK>>
+    Multiplier
+    Score-Requirement
+}
+
+entity "Plot" as plot {
+    Plot-ID <<CK>>
+    Status
+    Create-Date
+    Score
+    Outline-Bounds
+    Last-Activity
+    Outline-Schematic
+    Environment-Schematic
+    Complete-Schematic
+}
+
+entity "Tutorial Plot" as tutorial_plot {
+    Tutorial-ID <<CK>>
+    Stage-ID
+    Is-Complete
+    First-Stage-Start-Date
+    Last-Stage-Complete-Date
+}
+
+entity "Plot Member" as plot_member {
+    Member-UUID <<CK>>
+    Role
+}
+
+entity "Review" as review {
+    Review-ID <<CK>>
+    Rating
+    Feedback
+    Review-Date
+}
+
+api_key "1" -- "0..1" build_team : "assigned to "
+
+build_team "1" *-- "0..*" country : "manages "
+build_team "1" *-- "0..*" reviewer : "has"
+build_team "1" *-- "0..*" build_team_country : "has "
+
+country "1" *-- "0..*" build_team_country : "belongs to "
+country "1" *-- "0..1" city_project : "has "
+
+builder "1" *-- "0..*" reviewer : "assigned to"
+builder "1" *-- "0..*" plot_member : "assigned to"
+builder "0..*" -- "1" plot : "has "
+builder "1" -- "1" builder_setting : "has "
+
+plot "1" *-- "0..*" plot_member : "has"
+plot "0..*" --* "1" city_project : "associated with"
+plot "0..*" --* "1" plot_difficulty : "has"
+plot "1" -- "0..*" review : "has "
+
+tutorial_plot "1" *-- "0..*" builder : "assigned to "
+@enduml
