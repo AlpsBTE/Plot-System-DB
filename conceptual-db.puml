@@ -1,7 +1,7 @@
 @startuml
 skinparam nodesep 200
 skinparam ranksep 200
-skinparam defaultFontSize 18
+skinparam defaultFontSize 24
 
 skinparam linetype ortho
 
@@ -68,12 +68,11 @@ entity "Plot Tutorial" as plot_tutorial {
 api_key "assigned to \n1" -- "belongs to \n0..1" build_team
 
 build_team "belongs to \n0..*" *-- "assigned to \n0..*" country
-build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
+build_team "assigned to \n0..*" - "has 0..* reviewers" builder
 
-country "has \n1" *-- "assigned to \n0..*" city_project
+country "has 1" *-- "assigned to \n0..*" city_project
 
-builder "has 1 plot creator" -- "is in \n0..*" plot
-builder "assigned to \n1" *--- "has 1" builder_setting
+builder "assigned to \n1" *-- "has 1" builder_setting
 
 plot "assigned to 0..*" -- "built by \n0..*" builder
 (builder, plot) -- "Slot"
