@@ -1,6 +1,7 @@
 @startuml
 skinparam nodesep 200
 skinparam ranksep 200
+skinparam defaultFontSize 18
 
 skinparam linetype ortho
 
@@ -18,7 +19,7 @@ entity "Build Team" as build_team {
 }
 
 entity "Country" as country {
-    Country-ID <<CK>>
+    Country-Code <<CK>>
     Continent
 }
 
@@ -27,17 +28,10 @@ entity "City Project" as city_project {
     Is-Visible
 }
 
-entity "Build Team Country" as build_team_country {
-}
-
 entity "Builder" as builder {
     UUID <<CK>>
     Name
     Score
-    Completed-Plots
-}
-
-entity "Reviewer" as reviewer {
 }
 
 entity "Builder Setting" as builder_setting {
@@ -53,13 +47,14 @@ entity "Plot Difficulty" as plot_difficulty {
 entity "Plot" as plot {
     Plot-ID <<CK>>
     Status
-    Created-At
     Score
+    Last-Activity-At
     Outline-Bounds
-    Last-Activity
     Outline-Schematic
     Environment-Schematic
     Complete-Schematic
+    Created-By
+    Created-At
 }
 
 entity "Plot Tutorial" as plot_tutorial {
@@ -70,37 +65,21 @@ entity "Plot Tutorial" as plot_tutorial {
     Last-Stage-Completed-At
 }
 
-entity "Plot Member" as plot_member {
-    Member-UUID <<CK>>
-    Role
-}
+api_key "assigned to \n1" -- "belongs to \n0..1" build_team
 
-entity "Review" as review {
-    Review-ID <<CK>>
-    Rating
-    Feedback
-    Reviewed-At
-}
+build_team "belongs to \n0..*" *-- "assigned to \n0..*" country
+build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
 
-api_key "1" -- "0..1" build_team : "assigned to "
+country "has \n1" *-- "assigned to \n0..*" city_project
 
-build_team "1" *-- "0..*" country : "manages "
-build_team "1" *-- "0..*" reviewer : "has "
-build_team "1" *-- "0..*" build_team_country : "has "
+builder "has 1 plot creator" -- "is in \n0..*" plot
+builder "assigned to \n1" *--- "has 1" builder_setting
 
-country "1" *-- "0..*" build_team_country : "belongs to "
-country "1" *-- "0..1" city_project : "has "
+plot "assigned to 0..*" -- "built by \n0..*" builder
+(builder, plot) -- "Slot"
 
-builder "1" *-- "0..*" reviewer : "assigned to"
-builder "1" *-- "0..*" plot_member : "assigned to "
-builder "0..*" -- "1" plot : "has   "
-builder "1" -- "1" builder_setting : "has "
-builder "1" -- "0..*" review : "reviewed by"
+plot "assigned to \n0..*" --* "in 1" city_project
+plot "assigned to \n0..*" --* "has 1" plot_difficulty
 
-plot "1" *-- "0..*" plot_member : "has"
-plot "0..*" --* "1" city_project : "associated with"
-plot "0..*" --* "1" plot_difficulty : "has "
-plot "1" -- "0..*" review : "has   "
-
-plot_tutorial "1" *-- "0..*" builder : "assigned to "
+plot_tutorial "has \n1" --* "belongs to \n1" builder
 @enduml
