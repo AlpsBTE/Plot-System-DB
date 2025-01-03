@@ -5,13 +5,14 @@ skinparam defaultFontSize 24
 
 skinparam linetype ortho
 
+hide circle
 hide empty members
 !theme blueprint
 
 entity "API Key" as api_key {
     API-ID <<CK>>
     API-Key
-    Created-At
+    Create-Date
 }
 
 entity "Build Team" as build_team {
@@ -48,33 +49,44 @@ entity "Plot" as plot {
     Plot-ID <<CK>>
     Status
     Score
-    Last-Activity-At
+    Last-Activity-Date
     Outline-Bounds
-    Outline-Schematic
-    Environment-Schematic
+    Initial-Schematic
     Complete-Schematic
-    Created-By
-    Created-At
+    Published-By
+    Publish-Date
+    Version
 }
 
 entity "Plot Tutorial" as plot_tutorial {
     Plot-Tutorial-ID <<CK>>
     Stage-ID
     Is-Complete
-    First-Stage-Started-At
-    Last-Stage-Completed-At
+    First-Stage-Start-Date
+    Last-Stage-Complete-Date
+}
+
+entity "Review" as review {
+    Review-ID <<CK>>
+    Rating
+    Feedback
+    Reviewed-By
+    Review-Date
 }
 
 api_key "assigned to \n1" -- "belongs to \n0..1" build_team
 
 build_team "belongs to \n0..*" *-- "assigned to \n0..*" country
-build_team "assigned to \n0..*" - "has 0..* reviewers" builder
+build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
+review "has 0..*\n notifications" -- "has 1..* to notify" builder
+review "has 0..*" *- "has 1" plot
+(build_team, builder) - review
 
 country "has 1" *-- "assigned to \n0..*" city_project
 
 builder "assigned to \n1" *-- "has 1" builder_setting
 
-plot "assigned to 0..*" -- "built by \n0..*" builder
+plot "assigned to\n 0..*" -- "built by 0..*" builder
 (builder, plot) -- "Slot"
 
 plot "assigned to \n0..*" --* "in 1" city_project
