@@ -1,7 +1,7 @@
 @startuml
-skinparam nodesep 200
-skinparam ranksep 200
-skinparam defaultFontSize 24
+skinparam nodesep 150
+skinparam ranksep 250
+skinparam defaultFontSize 15
 
 skinparam linetype ortho
 
@@ -22,17 +22,24 @@ entity "Build Team" as build_team {
 entity "Country" as country {
     Country-Code <<CK>>
     Continent
+    Material-ID
+    Model-ID
 }
 
 entity "City Project" as city_project {
     City-Project-ID <<CK>>
     Is-Visible
+    Material-ID
+    Model-ID
 }
 
 entity "Builder" as builder {
     UUID <<CK>>
     Name
     Score
+    First-Slot
+    Second-Slot
+    Third-Slot
 }
 
 entity "Builder Setting" as builder_setting {
@@ -76,21 +83,20 @@ entity "Review" as review {
 
 api_key "assigned to \n1" -- "belongs to \n0..1" build_team
 
-build_team "belongs to \n0..*" *-- "assigned to \n0..*" country
+build_team "belongs to \n0..*" -- "assigned to \n0..*" country
 build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
-review "has 0..*\n notifications" -- "has 1..* to notify" builder
-review "has 0..*" *- "has 1" plot
-(build_team, builder) - review
+review "has 0..*\n notifications" -- "has 0..* to notify" builder
+review "has 0..*" *- "has 0..*" plot
 
 country "has 1" *-- "assigned to \n0..*" city_project
 
 builder "assigned to \n1" *-- "has 1" builder_setting
 
 plot "assigned to\n 0..*" -- "built by 0..*" builder
-(builder, plot) -- "Slot"
+(plot, builder) . role
 
 plot "assigned to \n0..*" --* "in 1" city_project
 plot "assigned to \n0..*" --* "has 1" plot_difficulty
 
-plot_tutorial "has \n1" --* "belongs to \n1" builder
+plot_tutorial "has \n1" ---* "belongs to \n1" builder
 @enduml

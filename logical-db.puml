@@ -1,0 +1,132 @@
+@startuml
+skinparam nodesep 200
+skinparam ranksep 200
+skinparam defaultFontSize 15
+
+skinparam linetype ortho
+
+hide circle
+hide empty members
+!theme blueprint
+
+entity api_key {
+    api_id <<PK>>
+    api_key
+    create_date
+}
+
+entity build_team {
+    api_id <<PK>>
+    build_team_id <<PK>>
+}
+
+entity country {
+    country_code <<PK>>
+    continent
+    material_id
+    model_id
+}
+
+entity city_project {
+    city_project_id <<PK>>
+    country_code <<FK>>
+    is_visible
+    material_id
+    model_id
+}
+
+entity builder {
+    uuid <<PK>>
+    name
+    score
+    first_slot
+    second_slot
+    third_slot
+}
+
+entity builder_setting {
+    uuid <<PK>>
+    plot_type
+}
+
+entity plot_difficulty {
+    difficulty_id <<PK>>
+    multiplier
+    score_requirement
+}
+
+entity plot {
+    plot_id <<PK>>
+    city_project_id <<FK>>
+    difficulty_id <<FK>>
+    status
+    score
+    last_activity_date
+    outline_bounds
+    initial_schematic
+    complete_schematic
+    published_by
+    publish_date
+    version
+}
+
+entity plot_tutorial {
+    plot_tutorial_id <<PK>>
+    uuid <<PK>>
+    stage_id
+    is_complete
+    first_stage_start_date
+    last_stage_complete_date
+}
+
+entity review {
+    review_id <<PK>>
+    plot_id <<FK>>
+    rating
+    feedback
+    reviewed_by
+    review_date
+}
+
+entity build_team_has_country {
+    build_team_id <<PK>>
+    country_code <<PK>>
+}
+
+entity build_team_has_reviewer {
+    build_team_id <<PK>>
+    uuid <<PK>>
+}
+
+entity builder_has_review_notification {
+    review_id <<PK>>
+    uuid <<PK>>
+}
+
+entity builder_has_plot {
+    plot_id <<PK>>
+    uuid <<PK>>
+    role
+}
+
+api_key "1" <-- "1" build_team
+
+build_team "1" <-- "0..*" build_team_has_country
+build_team "1" <-- "0..*" build_team_has_reviewer
+
+country "1" <-- "0..*" city_project
+country "1" <-- "0..*" build_team_has_country
+
+review "0..*" --> "1" plot
+review "1" <-- "0..*" builder_has_review_notification
+
+builder "1" <-- "1" builder_setting
+builder "1" <-- "0..*" build_team_has_reviewer
+builder "1" <-- "1" plot_tutorial
+builder "1" <-- "0..*" builder_has_review_notification
+builder "1" <-- "0..*" builder_has_plot
+
+plot "0..*" --> "1" city_project
+plot "0..*" --> "1" plot_difficulty
+plot "1" <-- "0..*" builder_has_plot
+@enduml
