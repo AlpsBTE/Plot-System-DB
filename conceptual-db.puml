@@ -1,7 +1,7 @@
 @startuml
-skinparam nodesep 150
+skinparam nodesep 100
 skinparam ranksep 250
-skinparam defaultFontSize 15
+skinparam defaultFontSize 18
 
 skinparam linetype ortho
 
@@ -9,28 +9,25 @@ hide circle
 hide empty members
 !theme blueprint
 
-entity "API Key" as api_key {
-    API-ID <<CK>>
-    API-Key
-    Create-Date
-}
-
 entity "Build Team" as build_team {
     Build-Team-ID <<CK>>
+    Name
+    API-Key
+    API-Create-Date
 }
 
 entity "Country" as country {
     Country-Code <<CK>>
     Continent
-    Material-ID
-    Model-ID
+    Material
+    Custom-Model-Data
 }
 
 entity "City Project" as city_project {
     City-Project-ID <<CK>>
     Is-Visible
-    Material-ID
-    Model-ID
+    Material
+    Custom-Model-Data
 }
 
 entity "Builder" as builder {
@@ -40,9 +37,6 @@ entity "Builder" as builder {
     First-Slot
     Second-Slot
     Third-Slot
-}
-
-entity "Builder Setting" as builder_setting {
     Plot-Type
 }
 
@@ -56,16 +50,18 @@ entity "Plot" as plot {
     Plot-ID <<CK>>
     Status
     Score
-    Last-Activity-Date
     Outline-Bounds
     Initial-Schematic
     Complete-Schematic
-    Published-By
-    Publish-Date
-    Version
+    Last-Activity-Date
+    Is-Pasted
+    MC-Version
+    Plot-Version
+    Created-By
+    Create-Date
 }
 
-entity "Plot Tutorial" as plot_tutorial {
+entity "Tutorial" as tutorial {
     Plot-Tutorial-ID <<CK>>
     Stage-ID
     Is-Complete
@@ -73,7 +69,7 @@ entity "Plot Tutorial" as plot_tutorial {
     Last-Stage-Complete-Date
 }
 
-entity "Review" as review {
+entity "Plot Review" as plot_review {
     Review-ID <<CK>>
     Rating
     Feedback
@@ -81,22 +77,19 @@ entity "Review" as review {
     Review-Date
 }
 
-api_key "assigned to \n1" -- "belongs to \n0..1" build_team
-
-build_team "belongs to \n0..*" -- "assigned to \n0..*" country
+build_team "belongs to \n0..*" -up- "assigned to \n0..*" country
+build_team "belongs to \n0..*" -- "assigned to \n0..*" city_project
 build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
-review "has 0..*\n notifications" -- "has 0..* to notify" builder
-review "has 0..*" *- "has 0..*" plot
+plot_review "has 0..*\n notifications" -- "has 0..* to notify" builder
+plot_review "has 0..*" *- "has 0..*" plot
 
 country "has 1" *-- "assigned to \n0..*" city_project
 
-builder "assigned to \n1" *-- "has 1" builder_setting
-
 plot "assigned to\n 0..*" -- "built by 0..*" builder
-(plot, builder) . role
+(plot, builder) . is_owner
 
 plot "assigned to \n0..*" --* "in 1" city_project
-plot "assigned to \n0..*" --* "has 1" plot_difficulty
+plot "assigned to \n0..*" -right* "has 1" plot_difficulty
 
-plot_tutorial "has \n1" ---* "belongs to \n1" builder
+tutorial "has \n1" --* "belongs to \n1" builder
 @enduml

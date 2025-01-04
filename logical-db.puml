@@ -1,7 +1,7 @@
 @startuml
-skinparam nodesep 200
-skinparam ranksep 200
-skinparam defaultFontSize 15
+skinparam nodesep 100
+skinparam ranksep 250
+skinparam defaultFontSize 18
 
 skinparam linetype ortho
 
@@ -9,30 +9,26 @@ hide circle
 hide empty members
 !theme blueprint
 
-entity api_key {
-    api_id <<PK>>
-    api_key
-    create_date
-}
-
 entity build_team {
-    api_id <<PK>>
     build_team_id <<PK>>
+    name
+    api_key
+    api_create_date
 }
 
 entity country {
     country_code <<PK>>
     continent
-    material_id
-    model_id
+    material
+    custom_model_data
 }
 
 entity city_project {
     city_project_id <<PK>>
     country_code <<FK>>
     is_visible
-    material_id
-    model_id
+    material
+    custom_model_data
 }
 
 entity builder {
@@ -42,10 +38,6 @@ entity builder {
     first_slot
     second_slot
     third_slot
-}
-
-entity builder_setting {
-    uuid <<PK>>
     plot_type
 }
 
@@ -61,17 +53,19 @@ entity plot {
     difficulty_id <<FK>>
     status
     score
-    last_activity_date
     outline_bounds
     initial_schematic
     complete_schematic
-    published_by
-    publish_date
-    version
+    last_activity_date
+    is_pasted
+    mc_version
+    plot_version
+    created_by
+    create_date
 }
 
-entity plot_tutorial {
-    plot_tutorial_id <<PK>>
+entity tutorial {
+    tutorial_id <<PK>>
     uuid <<PK>>
     stage_id
     is_complete
@@ -79,7 +73,7 @@ entity plot_tutorial {
     last_stage_complete_date
 }
 
-entity review {
+entity plot_review {
     review_id <<PK>>
     plot_id <<FK>>
     rating
@@ -91,6 +85,11 @@ entity review {
 entity build_team_has_country {
     build_team_id <<PK>>
     country_code <<PK>>
+}
+
+entity build_team_has_city_project {
+    build_team_id <<PK>>
+    city_project_id <<PK>>
 }
 
 entity build_team_has_reviewer {
@@ -106,27 +105,27 @@ entity builder_has_review_notification {
 entity builder_has_plot {
     plot_id <<PK>>
     uuid <<PK>>
-    role
+    is_owner
 }
 
-api_key "1" <-- "1" build_team
-
+build_team "1" <-- "0..*" build_team_has_city_project
 build_team "1" <-- "0..*" build_team_has_country
 build_team "1" <-- "0..*" build_team_has_reviewer
 
-country "1" <-- "0..*" city_project
-country "1" <-- "0..*" build_team_has_country
+country "1" <--- "0..*" city_project
+country "1" <--- "0..*" build_team_has_country
 
-review "0..*" --> "1" plot
-review "1" <-- "0..*" builder_has_review_notification
+city_project "1" <-- "0..*" build_team_has_city_project
 
-builder "1" <-- "1" builder_setting
+plot_review "1" <-- "0..*" builder_has_review_notification
+plot_review "0..*" --> "1" plot
+
 builder "1" <-- "0..*" build_team_has_reviewer
-builder "1" <-- "1" plot_tutorial
+builder "1" <--- "1" tutorial
 builder "1" <-- "0..*" builder_has_review_notification
 builder "1" <-- "0..*" builder_has_plot
 
 plot "0..*" --> "1" city_project
-plot "0..*" --> "1" plot_difficulty
+plot "0..*" ---> "1" plot_difficulty
 plot "1" <-- "0..*" builder_has_plot
 @enduml
