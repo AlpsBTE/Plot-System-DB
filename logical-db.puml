@@ -16,6 +16,11 @@ entity build_team {
     api_create_date
 }
 
+entity server {
+    build_team_id <<PK>>
+    server_name <<FK>>
+}
+
 entity country {
     country_code <<PK>>
     continent
@@ -26,9 +31,8 @@ entity country {
 entity city_project {
     city_project_id <<PK>>
     country_code <<FK>>
+    server_name <<FK>>
     is_visible
-    material
-    custom_model_data
 }
 
 entity builder {
@@ -111,11 +115,13 @@ entity builder_has_plot {
 build_team "1" <-- "0..*" build_team_has_city_project
 build_team "1" <-- "0..*" build_team_has_country
 build_team "1" <-- "0..*" build_team_has_reviewer
+build_team "1" <-- "0..*" server
 
 country "1" <--- "0..*" city_project
 country "1" <--- "0..*" build_team_has_country
 
 city_project "1" <-- "0..*" build_team_has_city_project
+city_project "0..*" --> "1" server
 
 plot_review "1" <-- "0..*" builder_has_review_notification
 plot_review "0..*" --> "1" plot

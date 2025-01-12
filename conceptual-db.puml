@@ -16,6 +16,11 @@ entity "Build Team" as build_team {
     API-Create-Date
 }
 
+entity "Server" as server {
+    Build-Team-ID <<CK>>
+    Server-Name
+}
+
 entity "Country" as country {
     Country-Code <<CK>>
     Continent
@@ -26,8 +31,6 @@ entity "Country" as country {
 entity "City Project" as city_project {
     City-Project-ID <<CK>>
     Is-Visible
-    Material
-    Custom-Model-Data
 }
 
 entity "Builder" as builder {
@@ -83,6 +86,7 @@ build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
 plot_review "has 0..*\n notifications" -- "has 0..* to notify" builder
 plot_review "has 0..*" *- "has 0..*" plot
 
+server "has 1" *--left- "has 0..*" city_project
 country "has 1" *-- "assigned to \n0..*" city_project
 
 plot "assigned to\n 0..*" -- "built by 0..*" builder

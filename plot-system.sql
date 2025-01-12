@@ -9,6 +9,15 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.build_team
     PRIMARY KEY (build_team_id)
 );
 
+CREATE TABLE IF NOT EXISTS plotsystem_v2.server
+(
+    build_team_id INT NOT NULL,
+    server_name VARCHAR(255) NOT NULL UNIQUE,
+    PRIMARY KEY (build_team_id, server_name),
+    FOREIGN KEY (build_team_id) REFERENCES plotsystem_v2.build_team(build_team_id)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS plotsystem_v2.country
 (
     country_code VARCHAR(2) NOT NULL,
@@ -22,11 +31,12 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.city_project
 (
     city_project_id VARCHAR(255) NOT NULL,
     country_code VARCHAR(2) NOT NULL,
+    server_name VARCHAR(255) NOT NULL,
     is_visible TINYINT NOT NULL DEFAULT 1,
-    material VARCHAR(255) NULL,
-    custom_model_data VARCHAR(255) NULL,
     PRIMARY KEY (city_project_id),
     FOREIGN KEY (country_code) REFERENCES plotsystem_v2.country(country_code)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (server_name) REFERENCES plotsystem_v2.server(server_name)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -61,11 +71,11 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot
     score INT NULL,
     outline_bounds TEXT NOT NULL,
     initial_schematic MEDIUMBLOB NOT NULL,
-    complete_schematic MEDIUMBLOB NOT NULL,
+    complete_schematic MEDIUMBLOB NULL,
     last_activity_date DATETIME NULL,
     is_pasted TINYINT NOT NULL DEFAULT 0,
     mc_version VARCHAR(8) NULL,
-    plot_version INT NOT NULL,
+    plot_version DOUBLE NOT NULL,
     created_by VARCHAR(36) NOT NULL,
     create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (plot_id),
