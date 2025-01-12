@@ -164,3 +164,8 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.builder_has_plot
     FOREIGN KEY (uuid) REFERENCES plotsystem_v2.builder(uuid)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO plotsystem_v2.plot_difficulty (difficulty_id, multiplier)
+    VALUES ('EASY', 1.0),
+           ('MEDIUM', 1.5),
+           ('HARD', 2);
