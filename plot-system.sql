@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.builder
 (
     uuid VARCHAR(36) NOT NULL,
     name VARCHAR(255) NOT NULL,
-    score INT NOT NULL,
+    score INT NOT NULL DEFAULT 0,
     first_slot INT NULL,
     second_slot INT NULL,
     third_slot INT NULL,
