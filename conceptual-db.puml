@@ -9,6 +9,13 @@ hide circle
 hide empty members
 !theme blueprint
 
+entity "System Info" as system_info {
+    System ID <<CK>>
+    DB-Version
+    Last-Update
+    Description
+}
+
 entity "Build Team" as build_team {
     Build-Team-ID <<CK>>
     Name

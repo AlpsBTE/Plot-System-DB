@@ -15,7 +15,15 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ## Tables and Their Purpose
 
-### 1. `build_team`
+### 1. `system_info`
+- **Purpose**: Tracks database version and updates.
+- **Key Fields**:
+  - `system_id`: Unique identifier of the system info. 
+  - `db_version`: Stores the current schema version (e.g., 2.0 or 2.1).
+  - `last_update`: Tracks the date and time of the last schema change or update.
+  - `description`: Optional field to provide context about the changes or database schema.
+
+### 2. `build_team`
 - **Purpose**: Stores information about teams responsible for building projects.
 - **Key Fields**:
   - `build_team_id`: Unique identifier for the team.
@@ -25,7 +33,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 2. `server`
+### 3. `server`
 - **Purpose**: Links servers to specific build teams.
 - **Key Fields**:
   - `build_team_id`: References the associated build team.
@@ -33,7 +41,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 3. `country`
+### 4. `country`
 - **Purpose**: Stores information about countries, including associated materials and continent information.
 - **Key Fields**:
   - `country_code`: Unique two-letter country code (e.g., "US", "AT").
@@ -43,7 +51,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 4. `city_project`
+### 5. `city_project`
 - **Purpose**: Represents city projects within specific countries and servers.
 - **Key Fields**:
   - `city_project_id`: Unique identifier for the city project.
@@ -53,7 +61,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 5. `builder`
+### 6. `builder`
 - **Purpose**: Stores information about individual builders.
 - **Key Fields**:
   - `uuid`: Unique identifier for each builder.
@@ -63,7 +71,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 6. `plot_difficulty`
+### 7. `plot_difficulty`
 - **Purpose**: Defines difficulty levels for plots.
 - **Key Fields**:
   - `difficulty_id`: Unique identifier for the difficulty (e.g., "EASY").
@@ -72,7 +80,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 7. `plot`
+### 8. `plot`
 - **Purpose**: Represents individual plots.
 - **Key Fields**:
   - `plot_id`: Unique identifier for the plot.
@@ -92,7 +100,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 8. `tutorial`
+### 9. `tutorial`
 - **Purpose**: Tracks builder progress through tutorials.
 - **Key Fields**:
   - `tutorial_id`: Unique tutorial ID.
@@ -101,7 +109,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 9. `plot_review`
+### 10. `plot_review`
 - **Purpose**: Stores reviews for plots.
 - **Key Fields**:
   - `review_id`: Unique identifier for the review.
@@ -111,7 +119,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 10. Relationship Tables
+### 11. Relationship Tables
 These tables establish relationships between entities:
 - **`build_team_has_country`**: Links build teams to countries.
 - **`build_team_has_city_project`**: Links build teams to city projects.
@@ -122,7 +130,11 @@ These tables establish relationships between entities:
 ---
 
 ## Initial Data
-The schema includes pre-defined difficulty levels for plots:
+The `system_info` table is populated with the initial schema version for the database:  
+- `db_version` set to `2.0`.  
+- `description` set to `'Initial database schema for Plot-System v5.0'`.
+
+The schema also includes pre-defined `plot_difficulty` levels for plots:
 - `EASY` with a multiplier of `1.0`.
 - `MEDIUM` with a multiplier of `1.5`.
 - `HARD` with a multiplier of `2.0`.
