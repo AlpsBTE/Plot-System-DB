@@ -23,6 +23,8 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
   - `last_update`: Tracks the date and time of the last schema change or update.
   - `description`: Optional field to provide context about the changes or database schema.
 
+---
+
 ### 2. `build_team`
 - **Purpose**: Stores information about teams responsible for building projects.
 - **Key Fields**:
