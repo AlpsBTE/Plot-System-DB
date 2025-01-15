@@ -12,6 +12,7 @@ hide empty members
 entity "System Info" as system_info {
     System ID <<CK>>
     DB-Version
+    Current-Plot-Version
     Last-Update
     Description
 }

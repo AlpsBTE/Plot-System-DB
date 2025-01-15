@@ -3,6 +3,7 @@ CREATE SCHEMA plotsystem_v2;
 CREATE TABLE IF NOT EXISTS plotsystem_v2.system_info (
     system_id INT NOT NULL AUTO_INCREMENT,
     db_version DOUBLE NOT NULL,
+    current_plot_version DOUBLE NOT NULL,
     last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     description TEXT NULL,
     PRIMARY KEY (system_id)
@@ -173,8 +174,8 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.builder_has_plot
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO plotsystem_v2.system_info (system_id, db_version, description)
-    VALUES (1, 2.0, 'Initial database schema for Plot-System v5.0');
+INSERT INTO plotsystem_v2.system_info (system_id, db_version, current_plot_version, description)
+    VALUES (1, 2.0, 4.0, 'Initial database schema for Plot-System v5.0');
 
 INSERT INTO plotsystem_v2.plot_difficulty (difficulty_id, multiplier)
     VALUES ('EASY', 1.0),

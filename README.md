@@ -20,6 +20,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 - **Key Fields**:
   - `system_id`: Unique identifier of the system info. 
   - `db_version`: Stores the current schema version (e.g., 2.0 or 2.1).
+  - `current_plot_version`: Stores the latest plot version (eg., 3.0, 4.0)
   - `last_update`: Tracks the date and time of the last schema change or update.
   - `description`: Optional field to provide context about the changes or database schema.
 
@@ -134,6 +135,7 @@ These tables establish relationships between entities:
 ## Initial Data
 The `system_info` table is populated with the initial schema version for the database:  
 - `db_version` set to `2.0`.  
+- `current_plot_version` set to `4.0`.
 - `description` set to `'Initial database schema for Plot-System v5.0'`.
 
 The schema also includes pre-defined `plot_difficulty` levels for plots:

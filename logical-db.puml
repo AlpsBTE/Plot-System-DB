@@ -12,6 +12,7 @@ hide empty members
 entity system_info {
     system_id <<PK>>
     db_version
+    current_plot_version
     last_update
     description
 }
