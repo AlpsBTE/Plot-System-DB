@@ -68,6 +68,7 @@ entity "Plot" as plot {
     Is-Pasted
     MC-Version
     Plot-Version
+    Plot-Type
     Created-By
     Create-Date
 }

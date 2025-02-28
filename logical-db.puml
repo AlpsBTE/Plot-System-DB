@@ -63,6 +63,7 @@ entity plot {
     plot_id <<PK>>
     city_project_id <<FK>>
     difficulty_id <<FK>>
+    owner_uuid <<FK>>
     status
     score
     outline_bounds
@@ -72,6 +73,7 @@ entity plot {
     is_pasted
     mc_version
     plot_version
+    plot_type
     created_by
     create_date
 }
@@ -94,11 +96,6 @@ entity plot_review {
     review_date
 }
 
-entity build_team_has_country {
-    build_team_id <<PK>>
-    country_code <<PK>>
-}
-
 entity build_team_has_city_project {
     build_team_id <<PK>>
     city_project_id <<PK>>
@@ -114,10 +111,9 @@ entity builder_has_review_notification {
     uuid <<PK>>
 }
 
-entity builder_has_plot {
+entity builder_is_plot_member {
     plot_id <<PK>>
     uuid <<PK>>
-    is_owner
 }
 
 build_team "1" <-- "0..*" build_team_has_city_project

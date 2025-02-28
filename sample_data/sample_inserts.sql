@@ -17,11 +17,6 @@ INSERT INTO plotsystem_v2.city_project (city_project_id, country_code, server_na
            ('ZURICH_SUBURBS', 'CH', 'ALPS-1'),
            ('MUNICH_SUBURBS', 'DE', 'GER-1');
 
-INSERT INTO plotsystem_v2.build_team_has_country (build_team_id, country_code)
-    VALUES (1, 'AT'),
-           (1, 'CH'),
-           (2, 'DE');
-
 INSERT INTO plotsystem_v2.build_team_has_city_project (build_team_id, city_project_id)
     VALUES (1, 'VIENNA_SUBURBS'),
            (1, 'ZURICH_SUBURBS'),

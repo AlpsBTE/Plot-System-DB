@@ -89,6 +89,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
   - `plot_id`: Unique identifier for the plot.
   - `city_project_id`: References a city project.
   - `difficulty_id`: References a plot difficulty.
+  - `owner_uuid`: References a builder.
   - `status`: Enum for plot status (`unclaimed`, `unfinished`, `unreviewed`, `completed`).
   - `score`: Score awarded to the plot (if reviewed).
   - `outline_bounds`: Coordinate boundaries of the plot.
@@ -98,6 +99,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
   - `is_pasted`: Indicates whether the plot is pasted into the terra world (1 for true, 0 for false).
   - `mc_version`: Minecraft version associated with the plot.
   - `plot_version`: Version number of the plot.
+  - `plot_type`: Type of plot associated with the plot.
   - `created_by`: UUID of the builder who created the plot.
   - `create_date`: Timestamp when the initial plot schematic was created.
 
@@ -107,7 +109,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 - **Purpose**: Tracks builder progress through tutorials.
 - **Key Fields**:
   - `tutorial_id`: Unique tutorial ID.
-  - `uuid`: Builder's UUID.
+  - `uuid`: Builder`s UUID.
   - `stage_id`: Current stage of the tutorial.
 
 ---
@@ -124,11 +126,10 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ### 11. Relationship Tables
 These tables establish relationships between entities:
-- **`build_team_has_country`**: Links build teams to countries.
 - **`build_team_has_city_project`**: Links build teams to city projects.
 - **`build_team_has_reviewer`**: Links build teams to their reviewers.
 - **`builder_has_review_notification`**: Tracks notifications sent to builders about reviews.
-- **`builder_has_plot`**: Tracks builders and their ownership/membership of plots.
+- **`builder_is_plot_member`**: Tracks builders and their membership of plots.
 
 ---
 

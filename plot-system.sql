@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.city_project
 CREATE TABLE IF NOT EXISTS plotsystem_v2.builder
 (
     uuid VARCHAR(36) NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     score INT NOT NULL DEFAULT 0,
     first_slot INT NULL,
     second_slot INT NULL,
@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot
     plot_id INT NOT NULL AUTO_INCREMENT,
     city_project_id VARCHAR(255) NOT NULL,
     difficulty_id VARCHAR(255) NOT NULL,
+    owner_uuid VARCHAR(36) NULL,
     status ENUM('unclaimed','unfinished','unreviewed','completed') NOT NULL DEFAULT 'unclaimed',
     score INT NULL,
     outline_bounds TEXT NOT NULL,
@@ -85,12 +86,15 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot
     is_pasted TINYINT NOT NULL DEFAULT 0,
     mc_version VARCHAR(8) NULL,
     plot_version DOUBLE NOT NULL,
+    plot_type INT NOT NULL,
     created_by VARCHAR(36) NOT NULL,
     create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (plot_id),
     FOREIGN KEY (city_project_id) REFERENCES plotsystem_v2.city_project(city_project_id)
         ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (difficulty_id) REFERENCES plotsystem_v2.plot_difficulty(difficulty_id)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (owner_uuid) REFERENCES plotsystem_v2.builder(uuid)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -115,17 +119,6 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot_review
     review_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (review_id),
     FOREIGN KEY (plot_id) REFERENCES plotsystem_v2.plot(plot_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS plotsystem_v2.build_team_has_country
-(
-    build_team_id INT NOT NULL,
-    country_code VARCHAR(2) NOT NULL,
-    PRIMARY KEY (build_team_id, country_code),
-    FOREIGN KEY (build_team_id) REFERENCES plotsystem_v2.build_team(build_team_id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (country_code) REFERENCES plotsystem_v2.country(country_code)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -162,11 +155,10 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.builder_has_review_notification
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS plotsystem_v2.builder_has_plot
+CREATE TABLE IF NOT EXISTS plotsystem_v2.builder_is_plot_member
 (
     plot_id INT NOT NULL,
     uuid VARCHAR(36) NOT NULL,
-    is_owner TINYINT NOT NULL,
     PRIMARY KEY (plot_id, uuid),
     FOREIGN KEY (plot_id) REFERENCES plotsystem_v2.plot(plot_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
