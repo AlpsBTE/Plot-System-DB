@@ -99,9 +99,8 @@ server "has 1" *--left- "has 0..*" city_project
 country "has 1" *-- "assigned to \n0..*" city_project
 
 plot "assigned to\n 0..*" -- "built by 0..*" builder
-(plot, builder) . is_owner
 
-plot "assigned to \n0..*" --* "in 1" city_project
+plot "assigned to \n0..*" ---* "in 1" city_project
 plot "assigned to \n0..*" -right* "has 1" plot_difficulty
 
 tutorial "has \n1" --* "belongs to \n1" builder
