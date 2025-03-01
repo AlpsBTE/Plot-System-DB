@@ -1,6 +1,6 @@
 @startuml
-skinparam nodesep 100
-skinparam ranksep 250
+skinparam nodesep 50
+skinparam ranksep 150
 skinparam defaultFontSize 18
 
 skinparam linetype ortho

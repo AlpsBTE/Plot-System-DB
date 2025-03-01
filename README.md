@@ -2,7 +2,7 @@
 
 This document provides an overview and explanation of the **PlotSystem Database Schema**.
 
-![conceptual-db.png](conceptual-db.png)
+![logical-db.png](logical-db.png)
 
 ---
 
