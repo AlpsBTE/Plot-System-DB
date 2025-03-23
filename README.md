@@ -58,6 +58,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 - **Purpose**: Represents city projects within specific countries and servers.
 - **Key Fields**:
   - `city_project_id`: Unique identifier for the city project.
+  - `build_team_id`: Unique identifier for the build team.
   - `country_code`: Links to a country.
   - `server_name`: Links to a server.
   - `is_visible`: Indicates whether the project is visible (1) or not (0).
@@ -124,12 +125,21 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
 
 ---
 
-### 11. Relationship Tables
+### 11. `review_toggle_criteria`
+- **Purpose**: Defines the criteria used in the review process.
+- **Key Fields**:
+  - `criteria_name`: The name of the criteria.
+  - `is_optional`: Indicates whether the criterion is optional.
+
+---
+
+### 12. Relationship Tables
 These tables establish relationships between entities:
-- **`build_team_has_city_project`**: Links build teams to city projects.
 - **`build_team_has_reviewer`**: Links build teams to their reviewers.
 - **`builder_has_review_notification`**: Tracks notifications sent to builders about reviews.
 - **`builder_is_plot_member`**: Tracks builders and their membership of plots.
+- **`build_team_uses_toggle_criteria`**: Tracks the criteria for each build team.
+- **`review_contains_toggle_criteria`**: Defines which criteria are considered in each review.
 
 ---
 

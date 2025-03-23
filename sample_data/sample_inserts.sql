@@ -12,15 +12,10 @@ INSERT INTO plotsystem_v2.country (country_code, continent, material)
            ('LI', 'EU', 'SKELETON_SKULL'),
            ('DE', 'EU', 'SKELETON_SKULL');
 
-INSERT INTO plotsystem_v2.city_project (city_project_id, country_code, server_name)
-    VALUES ('VIENNA_SUBURBS', 'AT', 'ALPS-1'),
-           ('ZURICH_SUBURBS', 'CH', 'ALPS-1'),
-           ('MUNICH_SUBURBS', 'DE', 'GER-1');
-
-INSERT INTO plotsystem_v2.build_team_has_city_project (build_team_id, city_project_id)
-    VALUES (1, 'VIENNA_SUBURBS'),
-           (1, 'ZURICH_SUBURBS'),
-           (2, 'MUNICH_SUBURBS');
+INSERT INTO plotsystem_v2.city_project (city_project_id, build_team_id, country_code, server_name)
+    VALUES ('VIENNA_SUBURBS', 1, 'AT', 'ALPS-1'),
+           ('ZURICH_SUBURBS', 1, 'CH', 'ALPS-1'),
+           ('MUNICH_SUBURBS', 2, 'DE', 'GER-1');
 
 INSERT INTO plotsystem_v2.builder (uuid, name, plot_type)
     VALUES ('3b350308-d857-4ecc-8b71-c93a2cf3c87b', 'R3tuxn', 1);

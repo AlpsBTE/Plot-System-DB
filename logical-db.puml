@@ -1,5 +1,5 @@
 @startuml
-skinparam nodesep 50
+skinparam nodesep 100
 skinparam ranksep 150
 skinparam defaultFontSize 18
 
@@ -38,6 +38,7 @@ entity country {
 
 entity city_project {
     city_project_id <<PK>>
+    build_team_id <<FK>>
     country_code <<FK>>
     server_name <<FK>>
     is_visible
@@ -65,7 +66,6 @@ entity plot {
     difficulty_id <<FK>>
     owner_uuid <<FK>>
     status
-    score
     outline_bounds
     initial_schematic
     complete_schematic
@@ -92,13 +92,14 @@ entity plot_review {
     plot_id <<FK>>
     rating
     feedback
+    score
     reviewed_by
     review_date
 }
 
-entity build_team_has_city_project {
-    build_team_id <<PK>>
-    city_project_id <<PK>>
+entity review_toggle_criteria {
+    criteria_name <<CK>>
+    is_optional
 }
 
 entity build_team_has_reviewer {
@@ -116,15 +117,22 @@ entity builder_is_plot_member {
     uuid <<PK>>
 }
 
-build_team "1" <-- "0..*" build_team_has_city_project
-build_team "1" <-- "0..*" build_team_has_country
+entity "build_team_uses_toggle_criteria" {
+    criteria_name <<PK>>
+    build_team_id <<PK>>
+}
+
+entity "review_contains_toggle_criteria" {
+    review_id <<PK>>
+    criteria_name <<PK>>
+}
+
 build_team "1" <-- "0..*" build_team_has_reviewer
 build_team "1" <-- "0..*" server
+build_team "1" <-- "0..*" city_project
 
 country "1" <--- "0..*" city_project
-country "1" <--- "0..*" build_team_has_country
 
-city_project "1" <-- "0..*" build_team_has_city_project
 city_project "0..*" --> "1" server
 
 plot_review "1" <-- "0..*" builder_has_review_notification
@@ -132,10 +140,15 @@ plot_review "0..*" --> "1" plot
 
 builder "1" <-- "0..*" build_team_has_reviewer
 builder "1" <--- "1" tutorial
-builder "1" <-- "0..*" builder_has_review_notification
-builder "1" <-- "0..*" builder_has_plot
+builder "1" <--- "0..*" builder_has_review_notification
+builder "1" <-- "0..*" builder_is_plot_member
 
 plot "0..*" --> "1" city_project
 plot "0..*" ---> "1" plot_difficulty
-plot "1" <-- "0..*" builder_has_plot
+plot "1" <-- "0..*" builder_is_plot_member
+
+review_toggle_criteria "1" <-- "0..*" build_team_uses_toggle_criteria
+build_team_uses_toggle_criteria "0..*" -> "1" build_team
+review_toggle_criteria "1" <-- "0..*" review_contains_toggle_criteria
+review_contains_toggle_criteria "0..*" --> "1" plot_review
 @enduml

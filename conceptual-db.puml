@@ -89,19 +89,26 @@ entity "Plot Review" as plot_review {
     Review-Date
 }
 
-build_team "belongs to \n0..*" -up- "assigned to \n0..*" country
-build_team "belongs to \n0..*" -- "assigned to \n0..*" city_project
-build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
-plot_review "has 0..*\n notifications" -- "has 0..* to notify" builder
-plot_review "has 0..*" *- "has 0..*" plot
+entity "Review Toggle Criteria" as review_toggle_criteria {
+    Criteria-Name <<CK>>
+    Is-Optional
+}
 
-server "has 1" *--left- "has 0..*" city_project
+build_team "belongs to \n1" *--- "assigned to \n0..*" city_project
+build_team "assigned to \n0..*" -- "has 0..* reviewers" builder
+build_team "assigned to \n0..*" -- "has \n0..*" review_toggle_criteria
+
+plot_review "has 0..*\n notifications" -- "has 0..* to notify" builder
+plot_review "has 0..*" *-- "has 0..*" plot
+plot_review "has \n0..*" -- "has \n0..*" review_toggle_criteria
+
+server "has 1" *-- "has 0..*" city_project
 country "has 1" *-- "assigned to \n0..*" city_project
 
 plot "assigned to\n 0..*" -- "built by 0..*" builder
 
-plot "assigned to \n0..*" ---* "in 1" city_project
-plot "assigned to \n0..*" -right* "has 1" plot_difficulty
+plot "assigned to \n0..*" --* "in 1" city_project
+plot "assigned to \n0..*" --* "has 1" plot_difficulty
 
 tutorial "has \n1" --* "belongs to \n1" builder
 @enduml
