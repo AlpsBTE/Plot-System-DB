@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.tutorial
 (
     tutorial_id              INT         NOT NULL,
     uuid                     VARCHAR(36) NOT NULL,
-    stage_id                 INT         NOT NULL,
+    stage_id                 INT         NOT NULL DEFAULT 0,
     is_complete              BOOLEAN     NOT NULL DEFAULT 0,
     first_stage_start_date   DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_stage_complete_date DATETIME    NULL,
