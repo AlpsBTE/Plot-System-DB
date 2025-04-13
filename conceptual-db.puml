@@ -60,7 +60,6 @@ entity "Plot Difficulty" as plot_difficulty {
 entity "Plot" as plot {
     Plot-ID <<CK>>
     Status
-    Score
     Outline-Bounds
     Initial-Schematic
     Complete-Schematic

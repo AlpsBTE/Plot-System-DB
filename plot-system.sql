@@ -82,7 +82,6 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot
     difficulty_id      VARCHAR(255)                                             NOT NULL,
     owner_uuid         VARCHAR(36)                                              NULL,
     status             ENUM ('unclaimed','unfinished','unreviewed','completed') NOT NULL DEFAULT 'unclaimed',
-    score              INT                                                      NULL,
     outline_bounds     TEXT                                                     NOT NULL,
     initial_schematic  MEDIUMBLOB                                               NOT NULL,
     complete_schematic MEDIUMBLOB                                               NULL,
