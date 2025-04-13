@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.tutorial
 
 CREATE TABLE IF NOT EXISTS plotsystem_v2.plot_review
 (
-    review_id   INT          NOT NULL,
+    review_id   INT          NOT NULL AUTO_INCREMENT,
     plot_id     INT          NOT NULL,
     rating      VARCHAR(7)   NOT NULL,
     feedback    VARCHAR(256) NULL,
