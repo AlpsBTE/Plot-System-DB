@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.review_contains_toggle_criteria
 (
     review_id     INT          NOT NULL,
     criteria_name VARCHAR(255) NOT NULL,
+    is_checked    BOOLEAN      NOT NULL,
     PRIMARY KEY (review_id, criteria_name),
     FOREIGN KEY (review_id) REFERENCES plotsystem_v2.plot_review (review_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
