@@ -86,6 +86,8 @@ entity "Plot Review" as plot_review {
     Feedback
     Reviewed-By
     Review-Date
+    Score
+    Split-Score
 }
 
 entity "Review Toggle Criteria" as review_toggle_criteria {

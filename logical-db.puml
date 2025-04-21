@@ -92,9 +92,10 @@ entity plot_review {
     plot_id <<FK>>
     rating
     feedback
-    score
     reviewed_by
     review_date
+    score
+    split_score
 }
 
 entity review_toggle_criteria {

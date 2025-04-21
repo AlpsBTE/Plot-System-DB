@@ -120,6 +120,8 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot_review
     feedback    VARCHAR(256) NULL,
     reviewed_by VARCHAR(36)  NOT NULL,
     review_date DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    score       int          NOT NULL,
+    split_score int          NULL,
     PRIMARY KEY (review_id),
     FOREIGN KEY (plot_id) REFERENCES plotsystem_v2.plot (plot_id)
         ON DELETE CASCADE ON UPDATE CASCADE

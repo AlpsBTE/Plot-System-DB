@@ -121,6 +121,8 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
   - `plot_id`: References the reviewed plot.
   - `rating`: Rating given to the plot.
   - `feedback`: Optional feedback from the reviewer.
+  - `score`: Overall computed score based on the review criteria.
+  - `split_score`: Score divided equally among all plot members.
 
 ---
 
