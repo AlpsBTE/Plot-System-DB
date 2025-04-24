@@ -92,9 +92,10 @@ entity plot_review {
     plot_id <<FK>>
     rating
     feedback
-    score
     reviewed_by
     review_date
+    score
+    split_score
 }
 
 entity review_toggle_criteria {
@@ -125,6 +126,7 @@ entity "build_team_uses_toggle_criteria" {
 entity "review_contains_toggle_criteria" {
     review_id <<PK>>
     criteria_name <<PK>>
+    is_checked
 }
 
 build_team "1" <-- "0..*" build_team_has_reviewer

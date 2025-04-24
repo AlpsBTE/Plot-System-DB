@@ -114,13 +114,15 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.tutorial
 
 CREATE TABLE IF NOT EXISTS plotsystem_v2.plot_review
 (
-    review_id   INT          NOT NULL,
+    review_id   INT          NOT NULL AUTO_INCREMENT,
     plot_id     INT          NOT NULL,
     rating      VARCHAR(7)   NOT NULL,
     score       INT          NOT NULL DEFAULT 0,
     feedback    VARCHAR(256) NULL,
     reviewed_by VARCHAR(36)  NOT NULL,
     review_date DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    score       int          NOT NULL,
+    split_score int          NULL,
     PRIMARY KEY (review_id),
     FOREIGN KEY (plot_id) REFERENCES plotsystem_v2.plot (plot_id)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -148,6 +150,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.review_contains_toggle_criteria
 (
     review_id     INT          NOT NULL,
     criteria_name VARCHAR(255) NOT NULL,
+    is_checked    BOOLEAN      NOT NULL,
     PRIMARY KEY (review_id, criteria_name),
     FOREIGN KEY (review_id) REFERENCES plotsystem_v2.plot_review (review_id)
         ON DELETE CASCADE ON UPDATE CASCADE,

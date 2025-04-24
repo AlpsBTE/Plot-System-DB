@@ -60,7 +60,6 @@ entity "Plot Difficulty" as plot_difficulty {
 entity "Plot" as plot {
     Plot-ID <<CK>>
     Status
-    Score
     Outline-Bounds
     Initial-Schematic
     Complete-Schematic
@@ -87,6 +86,8 @@ entity "Plot Review" as plot_review {
     Feedback
     Reviewed-By
     Review-Date
+    Score
+    Split-Score
 }
 
 entity "Review Toggle Criteria" as review_toggle_criteria {

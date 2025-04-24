@@ -92,7 +92,6 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
   - `difficulty_id`: References a plot difficulty.
   - `owner_uuid`: References a builder.
   - `status`: Enum for plot status (`unclaimed`, `unfinished`, `unreviewed`, `completed`).
-  - `score`: Score awarded to the plot (if reviewed).
   - `outline_bounds`: Coordinate boundaries of the plot.
   - `initial_schematic`: Initial schematic data (stored as a BLOB).
   - `complete_schematic`: Final schematic data (optional, stored as a BLOB).
@@ -122,6 +121,8 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
   - `plot_id`: References the reviewed plot.
   - `rating`: Rating given to the plot.
   - `feedback`: Optional feedback from the reviewer.
+  - `score`: Overall computed score based on the review criteria.
+  - `split_score`: Score divided equally among all plot members.
 
 ---
 
