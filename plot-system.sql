@@ -195,3 +195,13 @@ INSERT INTO plotsystem_v2.plot_difficulty (difficulty_id, multiplier)
 VALUES ('EASY', 1.0),
        ('MEDIUM', 1.5),
        ('HARD', 2);
+
+INSERT INTO plotsystem_v2.review_toggle_criteria (criteria_name, is_optional)
+VALUES ('built_on_outlines', false),
+       ('correct_height', false),
+       ('correct_facade_colour', false),
+       ('correct_roof_colour', true),
+       ('correct_roof_shape', false),
+       ('correct_amount_windows_doors', false),
+       ('correct_window_type', true),
+       ('windows_blacked_out', false)
