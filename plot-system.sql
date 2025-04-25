@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.city_project
 CREATE TABLE IF NOT EXISTS plotsystem_v2.builder
 (
     uuid        VARCHAR(36)  NOT NULL,
-    name        VARCHAR(255) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
     score       INT          NOT NULL DEFAULT 0,
     first_slot  INT          NULL,
     second_slot INT          NULL,
@@ -118,10 +118,10 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot_review
     plot_id     INT          NOT NULL,
     rating      VARCHAR(7)   NOT NULL,
     score       INT          NOT NULL DEFAULT 0,
+    split_score INT          NULL,
     feedback    VARCHAR(256) NULL,
     reviewed_by VARCHAR(36)  NOT NULL,
     review_date DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    split_score INT          NULL,
     PRIMARY KEY (review_id),
     FOREIGN KEY (plot_id) REFERENCES plotsystem_v2.plot (plot_id)
         ON DELETE CASCADE ON UPDATE CASCADE

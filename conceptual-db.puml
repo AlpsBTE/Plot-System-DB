@@ -83,11 +83,11 @@ entity "Tutorial" as tutorial {
 entity "Plot Review" as plot_review {
     Review-ID <<CK>>
     Rating
+    Score
+    Split-Score
     Feedback
     Reviewed-By
     Review-Date
-    Score
-    Split-Score
 }
 
 entity "Review Toggle Criteria" as review_toggle_criteria {
