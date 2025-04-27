@@ -118,7 +118,6 @@ CREATE TABLE IF NOT EXISTS plotsystem_v2.plot_review
     plot_id     INT          NOT NULL,
     rating      VARCHAR(7)   NOT NULL,
     score       INT          NOT NULL DEFAULT 0,
-    split_score INT          NULL,
     feedback    VARCHAR(256) NULL,
     reviewed_by VARCHAR(36)  NOT NULL,
     review_date DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,

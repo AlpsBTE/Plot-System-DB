@@ -120,8 +120,7 @@ build teams, servers, city projects, plots, builders, reviews, and their relatio
   - `review_id`: Unique identifier for the review.
   - `plot_id`: References the reviewed plot.
   - `rating`: Rating given to the plot.
-  - `score`: Overall computed score based on the review criteria.
-  - `split_score`: Score divided equally among all plot members.
+  - `score`: Overall computed score based on the rating, toggle criteria and score multiplier.
   - `feedback`: Optional feedback from the reviewer.
   - `reviewed_by`: Identifier for the user or system that submitted the review.
   - `review_date`: Date and time when the review was submitted.

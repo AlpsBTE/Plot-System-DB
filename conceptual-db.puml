@@ -84,7 +84,6 @@ entity "Plot Review" as plot_review {
     Review-ID <<CK>>
     Rating
     Score
-    Split-Score
     Feedback
     Reviewed-By
     Review-Date
